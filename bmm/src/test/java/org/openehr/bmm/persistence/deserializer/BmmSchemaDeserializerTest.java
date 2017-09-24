@@ -37,14 +37,22 @@ public class BmmSchemaDeserializerTest {
 
 
     private PersistedBmmSchema persistedBmmSchema;
+    private PersistedBmmSchema openEHRpersistedBmmSchema;
 
     @Before
     public void setup() {
+//        OdinLoaderImpl loader = new OdinLoaderImpl();
+//        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/cimi/CIMI-RM-3.0.5.bmm"));
+//        CompositeOdinObject root = visitor.getAstRootNode();
+//        BmmSchemaDeserializer deserializer = new BmmSchemaDeserializer();
+//        persistedBmmSchema = deserializer.deserialize(root);
+
         OdinLoaderImpl loader = new OdinLoaderImpl();
-        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/cimi/CIMI-RM-3.0.5.bmm"));
+        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/openEHR/openehr_rm_103.bmm"));
+//        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/openEHR/openehr_basic_types_103.bmm"));
         CompositeOdinObject root = visitor.getAstRootNode();
         BmmSchemaDeserializer deserializer = new BmmSchemaDeserializer();
-        persistedBmmSchema = deserializer.deserialize(root);
+        openEHRpersistedBmmSchema = deserializer.deserialize(root);
     }
 
     @Test
@@ -55,6 +63,13 @@ public class BmmSchemaDeserializerTest {
         assertEquals("CIMI_Reference_Model", bmmPackage.getName());
         testSecondLevelPackages(bmmPackage);
         testClassDefinitions(persistedBmmSchema);
+    }
+
+    @Test
+    public void testTopLevelPackageOpenEHR() {
+        Map<String, PersistedBmmPackage> packages = openEHRpersistedBmmSchema.getPackages();
+        Map<String, BmmIncludeSpecification> includes = openEHRpersistedBmmSchema.getIncludes();
+        assertEquals(1, packages.size());
     }
 
     public void testSecondLevelPackages(PersistedBmmPackage bmmParentPackage) {

@@ -22,6 +22,7 @@ package org.openehr.odin.loader;
  */
 
 import org.apache.commons.io.IOUtils;
+import org.openehr.odin.CompositeOdinObject;
 import org.openehr.odin.antlr.OdinVisitorImpl;
 import org.openehr.odin.antlr.odinLexer;
 import org.openehr.odin.antlr.odinParser;
@@ -31,14 +32,17 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Stack;
 
 public class OdinLoaderImpl {
 
     private static Logger log = LogManager.getLogger(OdinLoaderImpl.class.getName());
+    private ANTLRInputStream antlrInputStream;
 
     public OdinVisitorImpl loadOdinFile(String bmmFilePath) {
         File file = new File(bmmFilePath);
@@ -68,6 +72,29 @@ public class OdinLoaderImpl {
             throw new RuntimeException("Error loading odin file", ioe);
         }
         return visitor;
+    }
+
+    public OdinLoaderImpl initParser(InputStream inputStream) throws IOException {
+        antlrInputStream = new ANTLRInputStream(inputStream);
+        return this;
+    }
+
+    public CompositeOdinObject parse() throws InvalidParseResultException {
+        OdinVisitorImpl visitor = new OdinVisitorImpl<>();
+        odinLexer lexer = new odinLexer(antlrInputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        odinParser parser = new odinParser(tokens);
+        ParseTree tree = parser.odin_text();
+        visitor.visit(tree);
+        Stack parseOutputStack = visitor.getStack();
+
+        int stackSize = parseOutputStack.size();
+        if ( stackSize != 1) {
+            throw new InvalidParseResultException("Parse result stack has " +
+                    "unexpected number of elements. Expected 1, found " +
+                    stackSize);
+        }
+        return visitor.getAstRootNode();
     }
 
     public OdinVisitorImpl loadOdinFromString(String odinContent) {

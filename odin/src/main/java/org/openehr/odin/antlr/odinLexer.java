@@ -1,26 +1,5 @@
+// Generated from /media/sarikan/c30214e2-7e29-4418-a5c3-091b337f100b/work/data/projects/java-model-stack/odin/src/main/resources/antlr/odin.g4 by ANTLR 4.7
 package org.openehr.odin.antlr;
-
-/*
- * #%L
- * OpenEHR - Java Model Stack
- * %%
- * Copyright (C) 2016 - 2017 Cognitive Medical Systems
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- * Author: Claude Nanjo
- */
-
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -32,7 +11,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class odinLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -45,6 +24,10 @@ public class odinLexer extends Lexer {
 		SYM_TRUE=27, SYM_FALSE=28, ARCHETYPE_HRID=29, ARCHETYPE_REF=30, VERSION_ID=31, 
 		TERM_CODE_REF=32, URI=33, GUID=34, ALPHA_UC_ID=35, ALPHA_LC_ID=36, INTEGER=37, 
 		REAL=38, STRING=39, CHARACTER=40;
+	public static String[] channelNames = {
+		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
+	};
+
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
@@ -127,13 +110,16 @@ public class odinLexer extends Lexer {
 	public String getSerializedATN() { return _serializedATN; }
 
 	@Override
+	public String[] getChannelNames() { return channelNames; }
+
+	@Override
 	public String[] getModeNames() { return modeNames; }
 
 	@Override
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2*\u0335\b\1\4\2\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2*\u0335\b\1\4\2\t"+
 		"\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -201,15 +187,15 @@ public class odinLexer extends Lexer {
 		"\63\3\2\64\64\3\2\62\65\3\2\62\67\4\2[[{{\4\2OOoo\4\2YYyy\4\2FFff\4\2"+
 		"JJjj\4\2UUuu\4\2VVvv\4\2TTtt\4\2WWww\4\2GGgg\4\2HHhh\4\2CCcc\4\2NNnn\7"+
 		"\2&&((/\60BBaa\4\2#$),\b\2\"\"%%\61\61<=??AA\4\2$$^^\6\2\f\f\17\17))^"+
-		"^\f\2$$))AA^^cdhhppttvvxx\4\2C\\c|\3\2C\\\3\2c|\5\2\62;CHch\u036b\2\3"+
-		"\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2"+
-		"\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31"+
-		"\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2\2\2#\3\2\2\2"+
-		"\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2\2\2\2/\3\2\2\2\2"+
-		"\61\3\2\2\2\2\63\3\2\2\2\2E\3\2\2\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2\2"+
-		"M\3\2\2\2\2Q\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2\u0081\3\2\2\2\2\u0083\3\2"+
-		"\2\2\2\u0085\3\2\2\2\2\u0087\3\2\2\2\2\u0089\3\2\2\2\2\u008d\3\2\2\2\2"+
-		"\u0091\3\2\2\2\3\u00a9\3\2\2\2\5\u00ab\3\2\2\2\7\u00ad\3\2\2\2\t\u00af"+
+		"^\f\2$$))AA^^cdhhppttvvxx\4\2C\\c|\3\2C\\\3\2c|\5\2\62;CHch\2\u036b\2"+
+		"\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2"+
+		"\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2"+
+		"\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2\2\2#\3\2\2"+
+		"\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2\2\2\2/\3\2\2\2"+
+		"\2\61\3\2\2\2\2\63\3\2\2\2\2E\3\2\2\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2"+
+		"\2M\3\2\2\2\2Q\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2\u0081\3\2\2\2\2\u0083\3"+
+		"\2\2\2\2\u0085\3\2\2\2\2\u0087\3\2\2\2\2\u0089\3\2\2\2\2\u008d\3\2\2\2"+
+		"\2\u0091\3\2\2\2\3\u00a9\3\2\2\2\5\u00ab\3\2\2\2\7\u00ad\3\2\2\2\t\u00af"+
 		"\3\2\2\2\13\u00b1\3\2\2\2\r\u00b3\3\2\2\2\17\u00b5\3\2\2\2\21\u00b7\3"+
 		"\2\2\2\23\u00b9\3\2\2\2\25\u00bb\3\2\2\2\27\u00bd\3\2\2\2\31\u00bf\3\2"+
 		"\2\2\33\u00c1\3\2\2\2\35\u00c4\3\2\2\2\37\u00cb\3\2\2\2!\u00cd\3\2\2\2"+
