@@ -54,7 +54,7 @@ public class DocumentGeneratorTest {
         File file = new File(DocumentGeneratorTest.class.getResource("/templates/").getFile());
         assertTrue(file.isDirectory());
         generator.configure(file);
-        generator.setOutputDirectory("/Users/cnanjo/work/cimi_doc");
+        generator.setOutputDirectory("/tmp/cimi_doc");
         generator.generateDocument(access.getValidModels().get("cimi_rm_clinical_0.0.3".toUpperCase()));
     }
 

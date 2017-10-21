@@ -41,18 +41,12 @@ public class BmmSchemaDeserializerTest {
 
     @Before
     public void setup() {
-//        OdinLoaderImpl loader = new OdinLoaderImpl();
-//        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/cimi/CIMI-RM-3.0.5.bmm"));
-//        CompositeOdinObject root = visitor.getAstRootNode();
-//        BmmSchemaDeserializer deserializer = new BmmSchemaDeserializer();
-//        persistedBmmSchema = deserializer.deserialize(root);
-
         OdinLoaderImpl loader = new OdinLoaderImpl();
-        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/openEHR/openehr_rm_103.bmm"));
-//        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/openEHR/openehr_basic_types_103.bmm"));
+        OdinVisitorImpl visitor = loader.loadOdinFile(BmmSchemaDeserializerTest.class.getResourceAsStream("/cimi/CIMI-RM-3.0.5.bmm"));
         CompositeOdinObject root = visitor.getAstRootNode();
         BmmSchemaDeserializer deserializer = new BmmSchemaDeserializer();
-        openEHRpersistedBmmSchema = deserializer.deserialize(root);
+        persistedBmmSchema = deserializer.deserialize(root);
+
     }
 
     @Test
@@ -65,13 +59,6 @@ public class BmmSchemaDeserializerTest {
         testClassDefinitions(persistedBmmSchema);
     }
 
-    @Test
-    public void testTopLevelPackageOpenEHR() {
-        Map<String, PersistedBmmPackage> packages = openEHRpersistedBmmSchema.getPackages();
-        Map<String, BmmIncludeSpecification> includes = openEHRpersistedBmmSchema.getIncludes();
-        assertEquals(1, packages.size());
-    }
-
     public void testSecondLevelPackages(PersistedBmmPackage bmmParentPackage) {
         Map<String, PersistedBmmPackage> packages = bmmParentPackage.getPackages();
         assertEquals(4, packages.size());
@@ -80,7 +67,7 @@ public class BmmSchemaDeserializerTest {
         assertEquals(7, bmmPackage.getClasses().size());
         bmmPackage = packages.get("DATA_VALUE_TYPES");
         assertEquals("Data_Value_Types", bmmPackage.getName());
-        assertEquals(24, bmmPackage.getClasses().size());
+        assertEquals(26, bmmPackage.getClasses().size());
         bmmPackage = packages.get("PARTY");
         assertEquals("Party", bmmPackage.getName());
         assertEquals(4, bmmPackage.getClasses().size());
@@ -140,7 +127,7 @@ public class BmmSchemaDeserializerTest {
         PersistedBmmGenericParameter genericParameter = intervalValue.getGenericParameterDefinitions().get("T");
         assertNotNull(genericParameter);
         assertEquals("T", genericParameter.getName());
-        assertEquals("Ordered", genericParameter.getConformsToType());
+        assertEquals("ORDERED_VALUE", genericParameter.getConformsToType());
 
         PersistedBmmSinglePropertyOpen lower = (PersistedBmmSinglePropertyOpen)intervalValue.getPropertyByName("lower");
         assertEquals("lower", lower.getName());

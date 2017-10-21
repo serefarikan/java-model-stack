@@ -44,6 +44,7 @@ public class PersistedBmmPackage extends PersistedBmmPackageContainer implements
      * or unqualified. Persistent attribute.
      *
      */
+
     private String name;
 
     /**
