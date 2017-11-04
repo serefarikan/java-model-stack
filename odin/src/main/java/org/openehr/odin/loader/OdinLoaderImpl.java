@@ -21,6 +21,7 @@ package org.openehr.odin.loader;
  * Author: Claude Nanjo
  */
 
+import org.antlr.v4.runtime.BaseErrorListener;
 import org.apache.commons.io.IOUtils;
 import org.openehr.odin.CompositeOdinObject;
 import org.openehr.odin.antlr.OdinVisitorImpl;
@@ -61,9 +62,20 @@ public class OdinLoaderImpl {
         OdinVisitorImpl visitor = new OdinVisitorImpl<>();
         try {
             ANTLRInputStream input = new ANTLRInputStream(inputStream);
+
+            //override default antlr error handling mechanism
+            //we want exceptions to be thrown
             odinLexer lexer = new odinLexer(input);
+            lexer.removeErrorListeners();
+            lexer.addErrorListener(new BmmParserErrorListener());
+
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+            //same override logic goes for parser
             odinParser parser = new odinParser(tokens);
+            parser.removeErrorListeners();
+            parser.addErrorListener(new BmmParserErrorListener());
+
             ParseTree tree = parser.odin_text();
             visitor.visit(tree);
         } catch (IOException ioe) {
@@ -102,9 +114,19 @@ public class OdinLoaderImpl {
         try {
             InputStream is = IOUtils.toInputStream(odinContent, "UTF-8");
             ANTLRInputStream input = new ANTLRInputStream(is);
+
+            //override default antlr error handling mechanism
+            //we want exceptions to be thrown
             odinLexer lexer = new odinLexer(input);
+            lexer.removeErrorListeners();
+            lexer.addErrorListener(new BmmParserErrorListener());
+
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+            //same override logic goes for parser
             odinParser parser = new odinParser(tokens);
+            parser.removeErrorListeners();
+            parser.addErrorListener(new BmmParserErrorListener());
+
             ParseTree tree = parser.odin_text();
             visitor.visit(tree);
         } catch (IOException ioe) {

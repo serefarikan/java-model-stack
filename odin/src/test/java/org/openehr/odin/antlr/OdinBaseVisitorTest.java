@@ -21,6 +21,7 @@ package org.openehr.odin.antlr;
  * Author: Claude Nanjo
  */
 
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.openehr.odin.*;
 import org.openehr.odin.loader.OdinLoaderImpl;
 import org.junit.After;
@@ -38,6 +39,15 @@ public class OdinBaseVisitorTest {
     @After
     public void tearDown() throws Exception {
 
+    }
+
+    @Test(expected = ParseCancellationException.class)
+    public void loadCorruptReferenceModel() throws Exception {
+        OdinLoaderImpl loader = new OdinLoaderImpl();
+        OdinVisitorImpl visitor = loader.loadOdinFile(OdinBaseVisitorTest.class.getResourceAsStream("/odin/CIMI-RM-CORRUPT-3.0.5.bmm"));
+        assertEquals("Stack should consist of a single item", 1, visitor.getStack().size());
+        CompositeOdinObject root = visitor.getAstRootNode();
+        validateRootLevelAttributes(root);
     }
 
     @Test
